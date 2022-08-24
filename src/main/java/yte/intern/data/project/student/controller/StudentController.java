@@ -7,6 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import yte.intern.data.project.authentication.entity.Authority;
 import yte.intern.data.project.authentication.entity.Users;
+import yte.intern.data.project.authentication.repository.AuthorityRepository;
 import yte.intern.data.project.authentication.repository.UserRepository;
 import yte.intern.data.project.common.response.MessageResponse;
 import yte.intern.data.project.student.controller.request.AddStudentRequest;
@@ -14,6 +15,7 @@ import yte.intern.data.project.student.controller.request.UpdateStudentRequest;
 import yte.intern.data.project.student.controller.responses.StudentQueryModel;
 import yte.intern.data.project.student.service.StudentService;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -28,22 +30,23 @@ public class StudentController {
     private final UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthorityRepository authorityRepository;
+
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse addStudent(@Valid @RequestBody AddStudentRequest addStudentRequest) {
         Users a = new Users();
-        Authority authority = new Authority("STUDENT");
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authority);
-        a.setAuthorities(authorities);
+        Authority student = authorityRepository.findByAuthority("STUDENT")
+                .orElseThrow(() -> new EntityNotFoundException("Authority:STUDENT not found!"));
+
 
         a.setPassword(passwordEncoder.encode(addStudentRequest.password()));
 
         //a.setRole(Role.STUDENT);
         a.setUsername(addStudentRequest.username());
+
         userRepository.save(a);
-
-
         return studentService.addStudent(addStudentRequest.toDomainEntity());
     }
 

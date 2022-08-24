@@ -22,7 +22,7 @@ import java.util.List;
 public class Users extends BaseEntity implements UserDetails {
 
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_authorities",
             joinColumns = @JoinColumn(name = "authority_id"),

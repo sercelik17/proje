@@ -18,11 +18,12 @@ public class Authority extends BaseEntity implements GrantedAuthority {
 
     private String authority;
 
-    @ManyToMany(mappedBy = "authorities")
-    public List<Users> users = new ArrayList<>();
+
+
 
 
     public Authority(String authority) {
+
         this.authority = authority;
     }
 }
