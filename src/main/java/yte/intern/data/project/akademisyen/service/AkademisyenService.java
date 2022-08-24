@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import yte.intern.data.project.akademisyen.entity.Akademisyen;
 import yte.intern.data.project.common.response.MessageResponse;
 import yte.intern.data.project.common.response.ResponseType;
-import yte.intern.data.project.akademisyen.repository.AkademisyenRepository;
+import yte.intern.data.project.akademisyen.service.repository.AkademisyenRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;

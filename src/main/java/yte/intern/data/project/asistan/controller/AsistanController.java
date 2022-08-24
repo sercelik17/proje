@@ -2,16 +2,24 @@ package yte.intern.data.project.asistan.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import yte.intern.data.project.asistan.controller.request.AddAsistanRequest;
 import yte.intern.data.project.asistan.controller.request.UpdateAsistanRequest;
 import yte.intern.data.project.asistan.controller.responses.AsistanQueryModel;
 import yte.intern.data.project.asistan.service.AsistanService;
+
+import yte.intern.data.project.authentication.entity.Authority;
+import yte.intern.data.project.authentication.entity.Users;
+import yte.intern.data.project.authentication.repository.UserRepository;
 import yte.intern.data.project.common.response.MessageResponse;
+import yte.intern.data.project.student.controller.request.AddStudentRequest;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,10 +28,21 @@ import java.util.List;
 @Validated
 public class AsistanController {
     private final AsistanService asistanService;
-
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
     @PostMapping
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse addAsistan(@Valid @RequestBody yte.intern.data.project.asistan.controller.request.AddAsistanRequest addAsistanRequest) {
+        Users a = new Users();
+        Authority authority = new Authority("ASISTAN");
+        List<Authority> authorities = new ArrayList<>();
+        authorities.add(authority);
+        a.setAuthorities(authorities);
+        a.setUsername(addAsistanRequest.username());
+        a.setPassword(passwordEncoder.encode(addAsistanRequest.password()));        //a.setRole(Role.ASISTAN);
+        userRepository.save(a);
+
+
         return asistanService.addAsistan(addAsistanRequest.toDomainEntity());
     }
 
@@ -46,8 +65,10 @@ public class AsistanController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse updateAsistan(@Valid @RequestBody UpdateAsistanRequest updateAsistanRequest, @PathVariable Long id) {
         return asistanService.updateAsistan(id, updateAsistanRequest.toDomainEntity());
     }
+
+
 }

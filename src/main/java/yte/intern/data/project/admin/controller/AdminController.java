@@ -7,6 +7,8 @@ import yte.intern.data.project.admin.controller.request.AddAdminRequest;
 import yte.intern.data.project.admin.controller.request.UpdateAdminRequest;
 import yte.intern.data.project.admin.controller.responses.AdminQueryModel;
 import yte.intern.data.project.admin.service.AdminService;
+import yte.intern.data.project.authentication.entity.Users;
+import yte.intern.data.project.authentication.repository.UserRepository;
 import yte.intern.data.project.common.response.MessageResponse;
 
 import javax.validation.Valid;
@@ -19,7 +21,7 @@ import java.util.List;
 @Validated
 public class AdminController {
     private final AdminService adminService;
-
+    private final UserRepository userRepository;
     @PostMapping
     public MessageResponse addAdmin(@Valid @RequestBody AddAdminRequest addAdminRequest) {
         return adminService.addAdmin(addAdminRequest.toDomainEntity());

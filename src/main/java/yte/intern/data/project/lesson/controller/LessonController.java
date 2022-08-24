@@ -28,28 +28,28 @@ public class LessonController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('Student','ADMIN','Akademisyen','Asistan')")
+    @PreAuthorize("hasAnyAuthority('STUDENT','ADMIN','AKADEMISYEN','ASISTAN')")
     public List<LessonQueryModel> getAllLesson() {
         return lessonService.getAllLesson()
                 .stream()
                 .map(lesson -> new LessonQueryModel(lesson))
                 .toList();
     }
-
+// asdas
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','Akademisyen','Asistan')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','AKADEMISYEN','ASISTAN')")
     public LessonQueryModel getLessonById(@NotNull @PathVariable Long id) {
         return new LessonQueryModel(lessonService.getLessonById(id));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAuthority('Admin')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse deleteLessonById(@PathVariable @NotNull Long id) {
         return lessonService.deleteLessonById(id);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('Admin','Akademisyen','Asistan')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','AKADEMISYEN','ASISTAN')")
     public MessageResponse updateLesson(@Valid @RequestBody UpdateLessonRequest request, @PathVariable Long id) {
         return lessonService.updateLesson(id, request.toDomainEntity());
     }

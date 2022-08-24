@@ -22,10 +22,7 @@ public class UserTablePopulator {
 
     @PostConstruct
     public void populateDatabase() {
-        if (!userRepository.existsByUsername("user")) {
-            Users user = new Users(List.of(new Authority("USER")),"user", passwordEncoder.encode("user"));
-            userRepository.save(user);
-        }
+
         if (!userRepository.existsByUsername("admin")) {
             Users user = new Users(List.of(new Authority("ADMIN")),"admin", passwordEncoder.encode("admin") );
             userRepository.save(user);

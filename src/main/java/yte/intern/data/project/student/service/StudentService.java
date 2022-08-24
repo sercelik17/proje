@@ -3,7 +3,6 @@ package yte.intern.data.project.student.service; //security ve security test dep
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.springframework.stereotype.Service;
-import yte.intern.data.project.authentication.Role;
 import yte.intern.data.project.authentication.entity.Users;
 import yte.intern.data.project.student.entity.Student;
 import yte.intern.data.project.student.repository.StudentRepository;
@@ -50,7 +49,7 @@ public class StudentService {
         return new MessageResponse(ResponseType.SUCCESS, "Student has been updated successfully");
     }
 
-    public MessageResponse addStudentAdmin(Student toDomainEntity) {
+    /*public MessageResponse addStudentAdmin(Student toDomainEntity) {
         Users a = new Users();
         a.setPassword(toDomainEntity.getPassword());
         a.setUsername(toDomainEntity.getUsername());
@@ -58,5 +57,5 @@ public class StudentService {
         userRepository.save(a);
 
         return new MessageResponse(ResponseType.SUCCESS, "Student has been added successfully");
-    }
+    }*/
 }

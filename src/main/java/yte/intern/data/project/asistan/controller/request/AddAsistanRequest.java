@@ -1,9 +1,7 @@
 package yte.intern.data.project.asistan.controller.request;
 
 import yte.intern.data.project.asistan.entity.Asistan;
-import yte.intern.data.project.asistan.entity.Asistan;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 

@@ -21,19 +21,19 @@ public class ExamController {
     private final ExamService examService;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('Akademisyen','Asistan')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN')")
     public MessageResponse addExam(@Valid @RequestBody AddExamRequest addExamRequest) {
         return examService.addExam(addExamRequest.toDomainEntity());
     }
 
     @PutMapping("{id}")
-    @PreAuthorize("hasAnyAuthority('Akademisyen','Asistan')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN')")
     public MessageResponse getExamById(@PathVariable Long id) {
         return examService.deleteExamById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('Akademisyen','Asistan','Student')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN','STUDENT')")
     public List <ExamQueryModel> getAllExams() {
         return examService.getAllExam()
                 .stream()

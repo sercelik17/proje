@@ -9,8 +9,11 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import yte.intern.data.project.authentication.controller.requests.LoginRequest;
+import yte.intern.data.project.common.response.MehmetRecord;
 import yte.intern.data.project.common.response.MessageResponse;
 import yte.intern.data.project.common.response.ResponseType;
+
+import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
@@ -18,17 +21,20 @@ public class LoginService {
 
     private final AuthenticationManager authenticationManager;
 
-    public MessageResponse login(LoginRequest loginRequest) {
+    public MehmetRecord login(LoginRequest loginRequest) {
         var preAuthentication = new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password());
+        var authority = "";
         try {
             Authentication postAuthentication = authenticationManager.authenticate(preAuthentication);
             SecurityContext newContext = SecurityContextHolder.createEmptyContext();
             newContext.setAuthentication(postAuthentication);
             SecurityContextHolder.setContext(newContext);
 
-            return new MessageResponse(ResponseType.SUCCESS, "Login is successful");
+            authority = newContext.getAuthentication().getAuthorities().stream().toList().get(0).getAuthority();
+
+            return new MehmetRecord(ResponseType.SUCCESS, "Login is successful",authority);
         } catch (AuthenticationException e) {
-            return new MessageResponse(ResponseType.ERROR, "Authentication exception: %s".formatted(e.getMessage()));
+            return new MehmetRecord(ResponseType.ERROR, "Authentication exception: %s".formatted(e.getMessage()), authority);
         }
     }
 }

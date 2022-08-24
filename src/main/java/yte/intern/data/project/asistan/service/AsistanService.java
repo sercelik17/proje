@@ -1,11 +1,13 @@
 package yte.intern.data.project.asistan.service;
 
 import lombok.RequiredArgsConstructor;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 import yte.intern.data.project.akademisyen.entity.Akademisyen;
 import yte.intern.data.project.akademisyen.service.AkademisyenService;
 import yte.intern.data.project.asistan.entity.Asistan;
 import yte.intern.data.project.asistan.repository.AsistanRepository;
+import yte.intern.data.project.authentication.entity.Users;
 import yte.intern.data.project.common.response.MessageResponse;
 import yte.intern.data.project.common.response.ResponseType;
 
@@ -44,10 +46,6 @@ public class AsistanService {
         return new MessageResponse(ResponseType.SUCCESS, "Asistan has been deleted successfully");
     }
 
-    public Asistan getAsistanByName(String name) {
-        return asistanRepository.findAsistanByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("kayıt bulunamadı"));
-    }
 
     public MessageResponse updateAsistan(Long id, Asistan updatedAsistan) {
         Asistan asistan = asistanRepository.findById(id)
@@ -68,4 +66,6 @@ public class AsistanService {
         return asistanRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("kayıt bulunamadı"));
     }
+
+
 }
