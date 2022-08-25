@@ -55,13 +55,6 @@ public class Akademisyen extends BaseEntity {
     private Set <Student> students= new HashSet<>();
 
 
-    public void setId(Long id) {
-
-        this.id = id;
-    }
-
-    public Long getId() {
-
-        return id;
+    public void setId(Long akademisyenId) {
     }
 }

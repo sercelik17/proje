@@ -18,22 +18,22 @@ public class Asistan extends BaseEntity {
     private String username;//it'll be name and surname
     private String password;
 
-    public Asistan() {
-    }
 
     public Asistan(String name,
                    String surname,
                    String username,
-                   String password,
-                   Long akademisyenId
+                   String password
+
     ) {
         this.name = name;
         this.surname = surname;
         this.username = username;
         this.password = password;
 
-        this.akademisyen = new Akademisyen();
-        this.akademisyen.setId(akademisyenId);
+
+    }
+
+    public Asistan() {
 
     }
 
@@ -42,7 +42,6 @@ public class Asistan extends BaseEntity {
         this.surname = updatedAsistan.surname;
         this.password = updatedAsistan.password;
 
-        this.akademisyen = updatedAsistan.akademisyen;
     }
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -50,6 +49,5 @@ public class Asistan extends BaseEntity {
     private Akademisyen akademisyen;
 
 
-    public void setId(Long asistanId) {
-    }
+
 }

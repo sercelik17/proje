@@ -13,10 +13,12 @@ import yte.intern.data.project.asistan.service.AsistanService;
 
 import yte.intern.data.project.authentication.entity.Authority;
 import yte.intern.data.project.authentication.entity.Users;
+import yte.intern.data.project.authentication.repository.AuthorityRepository;
 import yte.intern.data.project.authentication.repository.UserRepository;
 import yte.intern.data.project.common.response.MessageResponse;
 import yte.intern.data.project.student.controller.request.AddStudentRequest;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -30,16 +32,21 @@ public class AsistanController {
     private final AsistanService asistanService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthorityRepository authorityRepository;
     @PostMapping
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public MessageResponse addAsistan(@Valid @RequestBody yte.intern.data.project.asistan.controller.request.AddAsistanRequest addAsistanRequest) {
+    @PreAuthorize("hasAnyAuthority('ADMIN','AKADEMISYEN')")
+    public MessageResponse addAsistan(@Valid @RequestBody yte.intern.data.project.asistan.controller.request.
+            AddAsistanRequest addAsistanRequest) {
         Users a = new Users();
-        Authority authority = new Authority("ASISTAN");
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authority);
-        a.setAuthorities(authorities);
+        Authority asistan = authorityRepository.findByAuthority("ASISTAN")
+                .orElseThrow(() -> new EntityNotFoundException("Authority:ASISTAN not found!"));
         a.setUsername(addAsistanRequest.username());
-        a.setPassword(passwordEncoder.encode(addAsistanRequest.password()));        //a.setRole(Role.ASISTAN);
+        a.setPassword(passwordEncoder.encode(addAsistanRequest.password()));
+        //a.setRole(Role.ASISTAN);
+
+        a.setAuthorities(List.of(asistan));
+
         userRepository.save(a);
 
 

@@ -11,17 +11,16 @@ public record AddLessonRequest(
         String type,
         String code,
         String room,
-        String source,
-        LocalDateTime time,
+        String timeSlot,
+        Long akademisyenId
 
-        Long akademisyenId,
-        Long asistanId
+
 
 
 
 ) {
     public Lesson toDomainEntity() {
 
-        return new Lesson(name, definition, type, code, room, source, akademisyenId, asistanId);
+        return new Lesson(name, definition, code, type, room, timeSlot, akademisyenId);
     }
 }

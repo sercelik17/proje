@@ -19,11 +19,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AsistanService {
     private final AsistanRepository asistanRepository;
-    private final AkademisyenService akademisyenService;
 
     public MessageResponse addAsistan(Asistan asistan) {
-        Akademisyen akademisyen = akademisyenService.getById(asistan.getAkademisyen().getId());
-        asistan.setAkademisyen(akademisyen);
 
         asistanRepository.save(asistan);
 
@@ -53,8 +50,7 @@ public class AsistanService {
 
         // student.update(updatedStudent);
 
-        Akademisyen akademisyen = akademisyenService.getById(updatedAsistan.getAkademisyen().getId());
-        updatedAsistan.setAkademisyen(akademisyen);
+
 
         asistan.update(updatedAsistan);
 

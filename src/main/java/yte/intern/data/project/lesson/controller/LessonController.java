@@ -24,6 +24,7 @@ public class LessonController {
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse addLesson(@Valid @RequestBody AddLessonRequest addLessonRequest) {
+
         return lessonService.addLesson(addLessonRequest.toDomainEntity());
     }
 
@@ -35,7 +36,6 @@ public class LessonController {
                 .map(lesson -> new LessonQueryModel(lesson))
                 .toList();
     }
-// asdas
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','AKADEMISYEN','ASISTAN')")
     public LessonQueryModel getLessonById(@NotNull @PathVariable Long id) {

@@ -15,13 +15,12 @@ public record AddAsistanRequest(
 
         String username,
 
-        String password,
+        String password
 
-        Long akademisyenId
 )
 
 {
     public Asistan toDomainEntity() {
-        return new Asistan(name, surname, username, password,akademisyenId);
+        return new Asistan(name, surname, username, password);
     }
 }

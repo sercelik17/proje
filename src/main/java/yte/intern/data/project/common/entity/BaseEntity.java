@@ -10,9 +10,11 @@ import java.util.Objects;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+    
 
     @Override
     public boolean equals(Object o) {

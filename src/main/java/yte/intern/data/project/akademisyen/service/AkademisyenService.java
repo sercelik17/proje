@@ -22,6 +22,7 @@ public class AkademisyenService {
     }
 
     public List<Akademisyen> getAllAkademisyen() {
+
         return akademisyenRepository.findAll();
     }
 

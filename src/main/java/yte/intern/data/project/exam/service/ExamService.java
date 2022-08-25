@@ -16,8 +16,8 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
 public class ExamService {
+
 
     private final ExamRepository examRepository;
     private final LessonService lessonService;
@@ -29,34 +29,36 @@ public class ExamService {
         examRepository.save(exam);
         return new MessageResponse(ResponseType.SUCCESS, "Sınav başarıyla kaydedildi");
     }
+
     public MessageResponse updateExam(Long id, Exam updateExam) {
         Exam exam = examRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Kayıt bulunamadı"));
+                .orElseThrow(() -> new EntityNotFoundException("kayıt bulunamadı"));
 
-        examRepository.save(updateExam);
+        Lesson lesson = lessonService.getLessonById(exam.getLesson().getId());
+        exam.setLesson(lesson);
+        exam.update(updateExam);
 
-        updateExam.update(exam);
-        return new MessageResponse(ResponseType.SUCCESS, "Sınav başarıyla güncellendi");
+        examRepository.save(exam);
+
+        return new MessageResponse(ResponseType.SUCCESS, "Exam has been updated successfully");
     }
 
     public MessageResponse deleteExamById(Long id) {
         examRepository.deleteById(id);
-        return new MessageResponse(ResponseType.SUCCESS,"Sınav başarıyla silindi");
+        return new MessageResponse(ResponseType.SUCCESS, "Exam başarıyla silindi");
     }
 
-    public List <Exam> getAllExam() {
+    public List<Exam> getAllExam() {
+
         return examRepository.findAll();
     }
 
-    public Exam getExamById(Long id) {
+
+    public Exam getById(Long id) {
         return examRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Kayıt bulunamadı"));
+                .orElseThrow(() -> new EntityNotFoundException("kayıt bulunamadı"));
     }
 
-    @GetMapping("{id}")
-    public Exam getById(@PathVariable Long id) {
-        return examRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Kayıt bulunamadı"));
-    }
+
 
 }

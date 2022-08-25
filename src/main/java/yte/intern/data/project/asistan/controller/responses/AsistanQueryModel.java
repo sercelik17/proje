@@ -8,8 +8,7 @@ public record AsistanQueryModel(
         String name,
         String surname,
         String username,
-        String password,
-        Long akademisyenId
+        String password
 
 ) {
     public AsistanQueryModel(yte.intern.data.project.asistan.entity.Asistan asistan) {
@@ -18,8 +17,7 @@ public record AsistanQueryModel(
                 asistan.getName(),
                 asistan.getSurname(),
                 asistan.getUsername(),
-                asistan.getPassword(),
-                asistan.getAkademisyen().getId()
+                asistan.getPassword()
         );
     }
 }

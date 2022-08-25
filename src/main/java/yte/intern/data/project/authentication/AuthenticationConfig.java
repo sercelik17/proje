@@ -21,11 +21,13 @@ public class AuthenticationConfig extends WebSecurityConfigurerAdapter {
     private final UserRepository userRepository;
 
     public AuthenticationConfig(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
+
         return new CustomUserDetailsService(userRepository);
     }
 

@@ -3,9 +3,6 @@ package yte.intern.data.project.lesson.controller.responses;
 import yte.intern.data.project.lesson.service.LessonService;
 import yte.intern.data.project.lesson.entity.Lesson;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 
 public record LessonQueryModel(
@@ -15,9 +12,8 @@ public record LessonQueryModel(
         String type,
         String code,
         String room,
-        String source,
-
-        LocalDateTime time
+        String timeSlot,
+        Long akademisyenId
 ) {
     public LessonQueryModel(Lesson lesson) {
         this(
@@ -27,8 +23,8 @@ public record LessonQueryModel(
                 lesson.getType(),
                 lesson.getCode(),
                 lesson.getRoom(),
-                lesson.getSource(),
-                lesson.getTime()
+                lesson.getTimeSlot(),
+                lesson.getAkademisyen().getId()
 
 
         );

@@ -45,6 +45,7 @@ public class StudentController {
 
         //a.setRole(Role.STUDENT);
         a.setUsername(addStudentRequest.username());
+        a.setAuthorities(List.of(student));
 
         userRepository.save(a);
         return studentService.addStudent(addStudentRequest.toDomainEntity());

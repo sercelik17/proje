@@ -2,8 +2,6 @@ package yte.intern.data.project.lesson.controller.request;
 
 import yte.intern.data.project.lesson.entity.Lesson;
 
-import java.time.LocalDateTime;
-
 
 public record UpdateLessonRequest(
 
@@ -12,15 +10,13 @@ public record UpdateLessonRequest(
         String type,
         String code,
         String room,
-        String source,
-        LocalDateTime time,
+        String timeSlot,
+        Long akademisyenId
 
-        Long akademisyenId,
-        Long asistanId
 
 ) {
     public Lesson toDomainEntity() {
 
-        return new Lesson(name, definition, type, code, room, source, akademisyenId, asistanId);
+        return new Lesson(name, definition, type, code, room, timeSlot, akademisyenId);
     }
 }

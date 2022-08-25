@@ -13,13 +13,15 @@ public record AddStudentRequest(
         @NotBlank
         @Size(max = 25)
         String surname,
+
         String username,
-        String email,
+
+        @Email String email,
         String password
 
 ) {
     public Student toDomainEntity() {
 
-        return new Student(name, surname,  username, email, password);
+        return new Student(name, surname,  email, username, password);
     }
 }

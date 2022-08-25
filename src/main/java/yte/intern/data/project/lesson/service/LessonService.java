@@ -6,6 +6,8 @@ import yte.intern.data.project.akademisyen.entity.Akademisyen;
 import yte.intern.data.project.akademisyen.service.AkademisyenService;
 import yte.intern.data.project.asistan.entity.Asistan;
 import yte.intern.data.project.asistan.service.AsistanService;
+import yte.intern.data.project.common.entity.BaseEntity;
+import yte.intern.data.project.lesson.controller.request.AddLessonRequest;
 import yte.intern.data.project.lesson.entity.Lesson;
 import yte.intern.data.project.lesson.repository.LessonRepository;
 import yte.intern.data.project.common.response.MessageResponse;
@@ -23,21 +25,16 @@ public class LessonService {
     private final AkademisyenService akademisyenService;
     private final AsistanService asistanService;
     public MessageResponse addLesson(Lesson lesson) {
+
         Akademisyen akademisyen = akademisyenService.getById(lesson.getAkademisyen().getId());
         lesson.setAkademisyen(akademisyen);
-
-        Asistan asistan = asistanService.getById(lesson.getAsistan().getId());
-        lesson.setAsistan(asistan);
 
         lessonRepository.save(lesson);
 
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been added successfully");
     }
 
-    public List<Lesson> getAllLesson() {
 
-        return lessonRepository.findAll();
-    }
 
     public Lesson getLessonById(Long id) {
         return lessonRepository.findById(id)
@@ -48,7 +45,10 @@ public class LessonService {
         lessonRepository.deleteById(id);
         return new MessageResponse(ResponseType.SUCCESS, "Lesson has been deleted successfully");
     }
+    public List<Lesson> getAllLesson() {
 
+        return lessonRepository.findAll();
+    }
     public MessageResponse updateLesson(Long id, Lesson updateLesson) {
         Lesson lesson = lessonRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Lesson not found"));

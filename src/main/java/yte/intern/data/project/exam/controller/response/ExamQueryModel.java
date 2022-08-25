@@ -9,8 +9,9 @@ public record ExamQueryModel(
         String room,
         String time,
         String info,
-        Long lessonId
+        Long lesson_id
 ) {
+
 
     public ExamQueryModel(Exam exam) {
         this(
@@ -20,6 +21,9 @@ public record ExamQueryModel(
                 exam.getTime(),
                 exam.getInfo(),
                 exam.getLesson().getId()
+
         );
     }
+
+
 }

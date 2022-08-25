@@ -10,11 +10,13 @@ import yte.intern.data.project.akademisyen.controller.request.UpdateAkademisyenR
 import yte.intern.data.project.akademisyen.service.AkademisyenService;
 import yte.intern.data.project.authentication.entity.Authority;
 import yte.intern.data.project.authentication.entity.Users;
+import yte.intern.data.project.authentication.repository.AuthorityRepository;
 import yte.intern.data.project.authentication.repository.UserRepository;
 import yte.intern.data.project.common.response.MessageResponse;
 import yte.intern.data.project.akademisyen.controller.responses.AkademisyenQueryModel;
 
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -28,17 +30,20 @@ public class AkademisyenController {
     private final AkademisyenService akademisyenService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    private final AuthorityRepository authorityRepository;
     @PostMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse addAkademisyen(@Valid @RequestBody AddAkademisyenRequest addAkademisyenRequest) {
         Users a = new Users();
-        Authority authority = new Authority("AKADEMISYEN");
-        List<Authority> authorities = new ArrayList<>();
-        authorities.add(authority);
-        a.setAuthorities(authorities);
+        Authority akademisyen = authorityRepository.findByAuthority("AKADEMISYEN")
+                .orElseThrow(() -> new EntityNotFoundException("Authority:AKADEMISYEN not found!"));
         a.setPassword(passwordEncoder.encode(addAkademisyenRequest.password()));
         //a.setRole(Role.AKADEMISYEN);
         a.setUsername(addAkademisyenRequest.username());
+
+        a.setAuthorities(List.of(akademisyen));
+
         userRepository.save(a);
 
         return akademisyenService.addAkademisyen(addAkademisyenRequest.toDomainEntity());
