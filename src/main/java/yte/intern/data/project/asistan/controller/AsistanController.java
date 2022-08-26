@@ -54,6 +54,7 @@ public class AsistanController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','AKADEMISYEN')")
     public List<AsistanQueryModel> getAllAsistans() {
         return asistanService.getAllAsistans()
                 .stream()
@@ -62,11 +63,13 @@ public class AsistanController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','AKADEMISYEN')")
     public AsistanQueryModel getById(@NotNull @PathVariable Long id) {
         return new AsistanQueryModel(asistanService.getById(id));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public MessageResponse deleteAsistanById(@PathVariable @NotNull Long id) {
         return asistanService.deleteAsistanById(id);
     }

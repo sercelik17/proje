@@ -13,6 +13,10 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Asistan extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected Long id;
     private String name;
     private String surname;
     private String username;//it'll be name and surname

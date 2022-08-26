@@ -23,26 +23,27 @@ public class ExamController {
     private final ExamService examService;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN')")
     public MessageResponse addExam(@Valid @RequestBody AddExamRequest addExamRequest) {
         return examService.addExam(addExamRequest.toDomainEntity());
     }
 
     @PutMapping("{id}")
-    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN')")
     public MessageResponse updateExam(@Valid @RequestBody UpdateExamRequest updateExamRequest, @PathVariable Long id) {
         return examService.updateExam(id, updateExamRequest.toDomainEntity());
 
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN')")
     public MessageResponse getExamById(@PathVariable Long id) {
+
         return examService.deleteExamById(id);
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN','STUDENT','ADMIN')")
+    @PreAuthorize("hasAnyAuthority('AKADEMISYEN','ASISTAN')")
     public List<ExamQueryModel> getAllExams() {
         return examService.getAllExam()
                 .stream()
@@ -51,7 +52,7 @@ public class ExamController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','STUDENT','AKADEMİSYEN','ASISTAN')")
+    @PreAuthorize("hasAnyAuthority('AKADEMİSYEN','ASISTAN')")
     public ExamQueryModel getById(@PathVariable Long id) {
 
         return new ExamQueryModel(examService.getById(id));

@@ -4,9 +4,10 @@ package yte.intern.data.project.student.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import yte.intern.data.project.common.entity.BaseEntity;
+import yte.intern.data.project.homework.entity.Homework;
+import yte.intern.data.project.lesson.entity.Lesson;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -20,17 +21,20 @@ public class Student extends BaseEntity {
     private String password;
 
 
+
     public Student(String name,
                    String surname,
                    String email,
                    String username,
                    String password
+
                    ) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.username = username;
         this.password = password;
+
 
     }
 
@@ -40,5 +44,6 @@ public class Student extends BaseEntity {
         this.email = updatedStudent.email;
         this.password = updatedStudent.password;
     }
+
 
 }
